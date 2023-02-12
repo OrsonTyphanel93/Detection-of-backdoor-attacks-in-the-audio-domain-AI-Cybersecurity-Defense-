@@ -2,6 +2,20 @@
 Detection of backdoor attacks in the audio domain
 
 
+
+With LLMs (large languages Models) and PPO (Proximal Policy Optimization, renforcement learning), attackers will further strengthen their cybersecurity attacks (such as backdoor, DDos, sphiging, trigger, spyware, etc.), will our standard detection methods be able to cope with even more polymorphic attacks? The aim of this article is to raise awareness and encourage research in this area and collaboration. 
+
+How will we guard against the proliferation of LLMs (which will undoubtedly be vectors for the spread of modern cybersecurity attacks) in our daily activities? 
+
+- Microsoft: ChatGPT
+- Google : LamBDA
+- YouSerachEngine: YouChat
+- Baidu, Inc: ErnieBot
+- Perplexity_ai: Perplexity Chat
+- AnthropicAI: Claude
+- heyjasperai: Jasper Chat
+
+
 The backdoored model can still function properly with clean data, making it difficult to identify the presence of the backdoor. Backdoor attacks are particularly dangerous if training is outsourced to a third party, as the third party has access to all the resources used for training, including the data, the model and the training operations. These third parties may have malicious employees who can install backdoors into the model without the user's knowledge.
 
 
