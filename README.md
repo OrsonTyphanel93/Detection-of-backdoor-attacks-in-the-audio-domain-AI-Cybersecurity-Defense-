@@ -3,7 +3,7 @@ Detection of backdoor attacks in the audio domain
 
 
 
-With LLMs (large languages Models) and PPO (Proximal Policy Optimization, renforcement learning), attackers will further strengthen their cybersecurity attacks (such as backdoor, DDos, sphiging, trigger, spyware, etc.), will our standard detection methods be able to cope with even more polymorphic attacks? The aim of this article is to raise awareness and encourage research in this area and collaboration. 
+With LLMs (large languages Models) and PPO (Dark knowledge , embodiment ; Proximal Policy Optimization, renforcement learning), attackers will further strengthen their cybersecurity attacks (such as backdoor, DDos, sphiging, trigger, spyware, etc.), will our standard detection methods be able to cope with even more polymorphic attacks? The aim of this article is to raise awareness and encourage research in this area and collaboration. 
 
 How will we guard against the proliferation of LLMs (which will undoubtedly be vectors for the spread of modern cybersecurity attacks) in our daily activities? 
 
