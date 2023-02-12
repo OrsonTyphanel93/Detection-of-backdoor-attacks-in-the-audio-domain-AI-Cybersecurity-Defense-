@@ -7,6 +7,8 @@ The backdoored model can still function properly with clean data, making it diff
 
 Poisoning-based backdoor attacks are a type of malicious cyberattack that uses malicious input to train a machine learning model. These attacks can be categorised based on different criteria, such as the image generator and the label shifting function that the attacker uses. To understand the attack, you can look at the 3 risks involved: the standard risk, the backdoor risk and the perceptible risk. Standard risk is whether the infected model can correctly predict benign samples. The backdoor risk measures whether an attacker can achieve his malicious goal by predicting certain samples. The perceptible risk examines whether the poisoned sample is detectable by humans or machines. In summary, there is a unified framework of poisoning-based backdoor attacks in which the attacker takes into account different risks, such as correctly predicting benign samples, achieving malicious goals and detecting poisoned samples.
 
+
+
 ![fig_plot_audio_comparison](https://user-images.githubusercontent.com/64611605/218340528-41955e0f-d73e-41fb-8585-ace1fe0fb203.png)
 ![fig_1](https://user-images.githubusercontent.com/64611605/218340613-c96324ca-45d4-43d6-b16e-45c1a9dc795a.png)
 
