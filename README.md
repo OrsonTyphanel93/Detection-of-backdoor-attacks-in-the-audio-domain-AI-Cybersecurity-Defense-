@@ -1,7 +1,7 @@
 # Detection-of-backdoor-attacks-in-the-audio-domain-AI-Cybersecurity-Defense-
 Detection of backdoor attacks in the audio domain
 
-
+Deep learning techniques allow speech recognition and speaker identification from the user's voice alone. This is useful for controlling various applications (such as entertainment, cars and homes). However, audio recognition deep learning models can be attacked in ways they should not (for example, by opening websites or turning off lights). An attack on audio DNNs involves adding bad data to a training set, so that the DNN cannot learn as well as it should. This can allow someone to control the predictions of the model without anyone knowing.
 
 With LLMs (large languages Models) and PPO (Dark knowledge , embodiment ; Proximal Policy Optimization, renforcement learning), attackers will further strengthen their cybersecurity attacks (such as backdoor, DDos, sphiging, trigger, spyware, etc.), will our standard detection methods be able to cope with even more polymorphic attacks? The aim of this article is to raise awareness and encourage research in this area and collaboration. 
 
