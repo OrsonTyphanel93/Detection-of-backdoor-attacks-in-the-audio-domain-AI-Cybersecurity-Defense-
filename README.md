@@ -1,7 +1,12 @@
 # Detection-of-backdoor-attacks-in-the-audio-domain-AI-Cybersecurity-Defense-
 Detection of backdoor attacks in the audio domain
 
+
 Deep learning techniques allow speech recognition and speaker identification from the user's voice alone. This is useful for controlling various applications (such as entertainment, cars and homes). However, audio recognition deep learning models can be attacked in ways they should not (for example, by opening websites or turning off lights). An attack on audio DNNs involves adding bad data to a training set, so that the DNN cannot learn as well as it should. This can allow someone to control the predictions of the model without anyone knowing.
+
+This paper discusses the development of a backdoor attack in the audio domain to hijack DNN models (CNN large, VGG16, CNN Small, RNN with attention, CNN, etc.) so that they do things they should not, while keeping the clean signal and the backdoor signal unnoticed. The trick is to find ways to detect this imperceptible backdoor signal using GMM-PCA clustering techniques and analysis of the first layers of the DNN model through the subscanner using adversarial perturbations to detect any sudden, tiny changes in the signal. 
+
+One way to protect against backdoors is to stay away from backdoor DNNs whose code, training data, and supply chain security flaws are left to others. Some people have a secret backdoor that allows them to control the actions of (some) deep neural networks (DNNs). To avoid being monitored, we use adversarial and clustering techniques to find any sudden, tiny changes in the DNN's own signal. If we detect such changes, we can know that the backdoor is present.
 
 With LLMs (large languages Models) and PPO (Dark knowledge , embodiment ; Proximal Policy Optimization, renforcement learning), attackers will further strengthen their cybersecurity attacks (such as backdoor, DDos, sphiging, trigger, spyware, etc.), will our standard detection methods be able to cope with even more polymorphic attacks? The aim of this article is to raise awareness and encourage research in this area and collaboration. 
 
