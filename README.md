@@ -69,7 +69,9 @@ def approximate_kld_between_gmm(gmm_model_1, gmm_model_2, x):
  #gmm_2 = GaussianMixture(n_components=2).fit(x_train_mix)
 ```
 
+## praticale
 
+```python
 
 # Approximate the KLD between the two GMM models
    kld = approximate_kld_between_gmm(gmm_1, gmm_2, x_train_mix_2d )
@@ -78,7 +80,7 @@ def approximate_kld_between_gmm(gmm_model_1, gmm_model_2, x):
 # Plot the results
   plt.hist(x_train_mix_2d, bins=50, density=True, alpha=0.5, color='blue')
   plt.show()
-
+```
 
 
 One way to protect against backdoors is to stay away from backdoor DNNs whose code, training data, and supply chain security flaws are left to others. Some people have a secret backdoor that allows them to control the actions of (some) deep neural networks (DNNs). To avoid being monitored, we use adversarial and clustering techniques to find any sudden, tiny changes in the DNN's own signal. If we detect such changes, we can know that the backdoor is present.
