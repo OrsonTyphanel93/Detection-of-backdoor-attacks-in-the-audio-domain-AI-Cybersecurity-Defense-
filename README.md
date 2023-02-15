@@ -6,6 +6,61 @@ Deep learning techniques allow speech recognition and speaker identification fro
 
 This paper discusses the development of a backdoor attack in the audio domain to hijack DNN models (CNN large, VGG16, CNN Small, RNN with attention, CNN, etc.) so that they do things they should not, while keeping the clean signal and the backdoor signal unnoticed. The trick is to find ways to detect this imperceptible backdoor signal using GMM-PCA clustering techniques and analysis of the first layers of the DNN model through the subscanner using adversarial perturbations to detect any sudden, tiny changes in the signal. 
 
+
+import tensorflow as tf
+import numpy as np
+
+def approximate_kld_between_gmm(gmm_model_1, gmm_model_2, x):
+    # Get the parameters of the Gaussian mixture models
+    mu_1, sigma_1, pi_1 = gmm_model_1.weights_, gmm_model_1.covars_, gmm_model_1.weights_
+    mu_2, sigma_2, pi_2 = gmm_model_2.weights_, gmm_model_2.covars_, gmm_model_2.weights_
+
+    n_components_1, n_components_2 = gmm_model_1.n_components, gmm_model_2.n_components
+    n_features = gmm_model_1.n_features
+
+    # Get the log probabilities of the Gaussian mixture models
+    log_probs_1 = gmm_model_1.score_samples(x)
+    log_probs_2 = gmm_model_2.score_samples(x)
+
+    # Calculate the approximation of the KLD
+    kld = 0
+    for i in range(n_components_1):
+        for j in range(n_components_2):
+            kld += (pi_1[i] / pi_2[j]) * np.exp(log_probs_1[i] - log_probs_2[j] + 
+                                                 np.log(pi_2[j]) - np.log(pi_1[i]) + 
+                                                 np.trace(np.linalg.inv(sigma_2[j]) @ sigma_1[i]) + 
+                                                 np.matmul((mu_1[i] - mu_2[j]).T, 
+                                                           np.linalg.inv(sigma_2[j]) @ (mu_1[i] - mu_2[j])) - n_features)
+    return kld
+
+# Example usage:
+import matplotlib.pyplot as plt
+from sklearn.mixture import GaussianMixture
+
+# Generate some sample data
+np.random.seed(0)
+gmm = GaussianMixture(n_components=2)
+x_train_mix_2d = x_train_mix.reshape(x_train_mix.shape[0], -1)
+
+
+# Fit two GMM models to the sample data
+
+gmm_1 = GaussianMixture(n_components=2).fit(x_train_mix_2d)
+gmm_2 = GaussianMixture(n_components=2).fit(x_train_mix_2d)
+
+#gmm_1 = GaussianMixture(n_components=2).fit(x_train_mix)
+#gmm_2 = GaussianMixture(n_components=2).fit(x_train_mix)
+
+# Approximate the KLD between the two GMM models
+kld = approximate_kld_between_gmm(gmm_1, gmm_2, x_train_mix_2d )
+print("Approximated KLD between GMM models:", kld)
+
+# Plot the results
+plt.hist(x_train_mix_2d, bins=50, density=True, alpha=0.5, color='blue')
+plt.show()
+
+
+
 One way to protect against backdoors is to stay away from backdoor DNNs whose code, training data, and supply chain security flaws are left to others. Some people have a secret backdoor that allows them to control the actions of (some) deep neural networks (DNNs). To avoid being monitored, we use adversarial and clustering techniques to find any sudden, tiny changes in the DNN's own signal. If we detect such changes, we can know that the backdoor is present.
 
 With LLMs (large languages Models) and PPO (Dark knowledge , embodiment ; Proximal Policy Optimization, renforcement learning), attackers will further strengthen their cybersecurity attacks (such as backdoor, DDos, sphiging, trigger, spyware, etc.), will our standard detection methods be able to cope with even more polymorphic attacks? The aim of this article is to raise awareness and encourage research in this area and collaboration. 
