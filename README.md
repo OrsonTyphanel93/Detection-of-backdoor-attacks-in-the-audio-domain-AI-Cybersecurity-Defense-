@@ -138,4 +138,4 @@ Please adhere to this project's `code of conduct`.
 
 ## Feedback
 
-the full simulation code of the article will be available after acceptance, if I forget to make it public after acceptance contact me  
+The full simulation code of the article will be available after acceptance, if I forget to make it public after acceptance contact me  
