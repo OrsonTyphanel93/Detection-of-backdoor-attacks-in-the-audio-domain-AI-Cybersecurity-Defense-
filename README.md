@@ -10,6 +10,7 @@ This paper discusses the development of a backdoor attack in the audio domain to
 import tensorflow as tf
 import numpy as np
 
+
 def approximate_kld_between_gmm(gmm_model_1, gmm_model_2, x):
     # Get the parameters of the Gaussian mixture models
     mu_1, sigma_1, pi_1 = gmm_model_1.weights_, gmm_model_1.covars_, gmm_model_1.weights_
@@ -31,33 +32,34 @@ def approximate_kld_between_gmm(gmm_model_1, gmm_model_2, x):
                                                  np.trace(np.linalg.inv(sigma_2[j]) @ sigma_1[i]) + 
                                                  np.matmul((mu_1[i] - mu_2[j]).T, 
                                                            np.linalg.inv(sigma_2[j]) @ (mu_1[i] - mu_2[j])) - n_features)
+                                                           
     return kld
 
-# Example usage:
-import matplotlib.pyplot as plt
-from sklearn.mixture import GaussianMixture
+   # Example usage:
+    import matplotlib.pyplot as plt
+    from sklearn.mixture import GaussianMixture
 
-# Generate some sample data
-np.random.seed(0)
-gmm = GaussianMixture(n_components=2)
-x_train_mix_2d = x_train_mix.reshape(x_train_mix.shape[0], -1)
+ # Generate some sample data
+ np.random.seed(0)
+ gmm = GaussianMixture(n_components=2)
+ x_train_mix_2d = x_train_mix.reshape(x_train_mix.shape[0], -1)
 
 
-# Fit two GMM models to the sample data
+ # Fit two GMM models to the sample data
 
-gmm_1 = GaussianMixture(n_components=2).fit(x_train_mix_2d)
-gmm_2 = GaussianMixture(n_components=2).fit(x_train_mix_2d)
+ gmm_1 = GaussianMixture(n_components=2).fit(x_train_mix_2d)
+ gmm_2 = GaussianMixture(n_components=2).fit(x_train_mix_2d)
 
-#gmm_1 = GaussianMixture(n_components=2).fit(x_train_mix)
-#gmm_2 = GaussianMixture(n_components=2).fit(x_train_mix)
+ #gmm_1 = GaussianMixture(n_components=2).fit(x_train_mix)
+ #gmm_2 = GaussianMixture(n_components=2).fit(x_train_mix)
 
 # Approximate the KLD between the two GMM models
-kld = approximate_kld_between_gmm(gmm_1, gmm_2, x_train_mix_2d )
-print("Approximated KLD between GMM models:", kld)
+   kld = approximate_kld_between_gmm(gmm_1, gmm_2, x_train_mix_2d )
+   print("Approximated KLD between GMM models:", kld)
 
 # Plot the results
-plt.hist(x_train_mix_2d, bins=50, density=True, alpha=0.5, color='blue')
-plt.show()
+  plt.hist(x_train_mix_2d, bins=50, density=True, alpha=0.5, color='blue')
+  plt.show()
 
 
 
