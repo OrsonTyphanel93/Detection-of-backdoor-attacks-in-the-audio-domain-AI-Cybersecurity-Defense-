@@ -9,7 +9,7 @@ This paper discusses the development of a backdoor attack in the audio domain to
 
 ## Documentation
 
-[Documentation](https://notes.quantecon.org/submission/5b3b1856b9eab00015b89f90)
+[Documentation](https://adversarial-robustness-toolbox.readthedocs.io/en/latest/)
 
 
 ## Features
