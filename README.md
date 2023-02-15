@@ -90,6 +90,121 @@ def approximate_kld_between_gmm(gmm_model_1, gmm_model_2, x):
   plt.show()
 ```
 
+## Usages backdoor
+
+```python
+
+from __future__ import absolute_import, division, print_function, unicode_literals
+
+import logging
+import numpy as np
+import pytest
+import os
+
+from art.attacks.poisoning.perturbations.audio_perturbations import insert_tone_trigger, insert_audio_trigger
+
+logger = logging.getLogger(__name__)
+
+
+def test_insert_tone_trigger(art_warning):
+    try:
+        # test single example
+        audio = insert_tone_trigger(x=np.zeros(3200), sampling_rate=16000)
+        assert audio.shape == (3200,)
+        assert np.max(audio) != 0
+
+        # test single example with differet duration, frequency, and scale
+        audio = insert_tone_trigger(x=np.zeros(3200), sampling_rate=16000, frequency=16000, duration=0.2, scale=0.5)
+        assert audio.shape == (3200,)
+        assert np.max(audio) != 0
+
+        # test a batch of examples
+        audio = insert_tone_trigger(x=np.zeros((10, 3200)), sampling_rate=16000)
+        assert audio.shape == (10, 3200)
+        assert np.max(audio) != 0
+
+        # test single example with shift
+        audio = insert_tone_trigger(x=np.zeros(3200), sampling_rate=16000, shift=10)
+        assert audio.shape == (3200,)
+        assert np.max(audio) != 0
+        assert np.sum(audio[:10]) == 0
+
+        # test a batch of examples with random shift
+        audio = insert_tone_trigger(x=np.zeros((10, 3200)), sampling_rate=16000, random=True)
+        assert audio.shape == (10, 3200)
+        assert np.max(audio) != 0
+
+        # test when length of backdoor is larger than that of audio signal
+        with pytest.raises(ValueError):
+            _ = insert_tone_trigger(x=np.zeros(3200), sampling_rate=16000, duration=0.3)
+
+        # test when shift + backdoor is larger than that of audio signal
+        with pytest.raises(ValueError):
+            _ = insert_tone_trigger(x=np.zeros(3200), sampling_rate=16000, duration=0.2, shift=5)
+
+```
+
+
+## Usages backdoor
+
+```python
+
+def test_insert_audio_trigger(art_warning):
+    file_path = os.path.join(os.getcwd(), "/data/orson_backdoor.wav")
+    try:
+        # test single example
+        audio = insert_audio_trigger(x=np.zeros(32000), sampling_rate=16000, backdoor_path=file_path)
+        assert audio.shape == (32000,)
+        assert np.max(audio) != 0
+
+        # test single example with differet duration and scale
+        audio = insert_audio_trigger(
+            x=np.zeros(32000),
+            sampling_rate=16000,
+            backdoor_path=file_path,
+            duration=0.8,
+            scale=0.5,
+        )
+        assert audio.shape == (32000,)
+        assert np.max(audio) != 0
+
+        # test a batch of examples
+        audio = insert_audio_trigger(x=np.zeros((10, 16000)), sampling_rate=16000, backdoor_path=file_path)
+        assert audio.shape == (10, 16000)
+        assert np.max(audio) != 0
+
+        # test single example with shift
+        audio = insert_audio_trigger(x=np.zeros(32000), sampling_rate=16000, backdoor_path=file_path, shift=10)
+        assert audio.shape == (32000,)
+        assert np.max(audio) != 0
+        assert np.sum(audio[:10]) == 0
+
+        # test a batch of examples with random shift
+        audio = insert_audio_trigger(
+            x=np.zeros((10, 32000)),
+            sampling_rate=16000,
+            backdoor_path=file_path,
+            random=True,
+        )
+        assert audio.shape == (10, 32000)
+        assert np.max(audio) != 0
+
+        # test when length of backdoor is larger than that of audio signal
+        with pytest.raises(ValueError):
+            _ = insert_audio_trigger(x=np.zeros(15000), sampling_rate=16000, backdoor_path=file_path)
+
+        # test when shift + backdoor is larger than that of audio signal
+        with pytest.raises(ValueError):
+            _ = insert_audio_trigger(
+                x=np.zeros(16000),
+                sampling_rate=16000,
+                backdoor_path=file_path,
+                duration=1,
+                shift=5,
+            )
+
+```
+
 
 One way to protect against backdoors is to stay away from backdoor DNNs whose code, training data, and supply chain security flaws are left to others. Some people have a secret backdoor that allows them to control the actions of (some) deep neural networks (DNNs). To avoid being monitored, we use adversarial and clustering techniques to find any sudden, tiny changes in the DNN's own signal. If we detect such changes, we can know that the backdoor is present.
 
@@ -123,6 +238,9 @@ Poisoning-based backdoor attacks are a type of malicious cyberattack that uses m
 
 ![adv_6](https://user-images.githubusercontent.com/64611605/218340533-e86d5549-e986-45ec-900b-5fd7be41caab.png)
 ![adv_3](https://user-images.githubusercontent.com/64611605/218340539-45d576bf-748f-4edf-9c6f-e4fcb0b86d83.png)
+
+
+
 
 
 
