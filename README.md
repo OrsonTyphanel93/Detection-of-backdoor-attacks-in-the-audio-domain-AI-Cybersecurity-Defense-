@@ -12,6 +12,14 @@ This paper discusses the development of a backdoor attack in the audio domain to
 [Documentation](https://notes.quantecon.org/submission/5b3b1856b9eab00015b89f90)
 
 
+## Features
+
+- trigger
+- backdoor
+- DNN
+- Audio
+
+
 ## Usage
 
 ```python
@@ -115,3 +123,19 @@ Poisoning-based backdoor attacks are a type of malicious cyberattack that uses m
 
 ![adv_6](https://user-images.githubusercontent.com/64611605/218340533-e86d5549-e986-45ec-900b-5fd7be41caab.png)
 ![adv_3](https://user-images.githubusercontent.com/64611605/218340539-45d576bf-748f-4edf-9c6f-e4fcb0b86d83.png)
+
+
+
+
+## Contributing
+
+Contributions are always welcome!
+
+See `contributing.md` for ways to get started.
+
+Please adhere to this project's `code of conduct`.
+
+
+## Feedback
+
+the full simulation code of the article will be available after acceptance, if I forget to make it public after acceptance contact me  
