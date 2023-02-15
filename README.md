@@ -12,7 +12,7 @@ This paper discusses the development of a backdoor attack in the audio domain to
 [Documentation](https://notes.quantecon.org/submission/5b3b1856b9eab00015b89f90)
 
 
-## Usage/Examples
+## Usage
 
 ```python
 
@@ -48,24 +48,28 @@ def approximate_kld_between_gmm(gmm_model_1, gmm_model_2, x):
 
 
 
+## Examples
 
-   # Example usage:
-    import matplotlib.pyplot as plt
-    from sklearn.mixture import GaussianMixture
-
- # Generate some sample data
- np.random.seed(0)
+```python
+ import matplotlib.pyplot as plt
+ from sklearn.mixture import GaussianMixture
+ 
+ 
+  # Generate some sample data
+   np.random.seed(0)
  gmm = GaussianMixture(n_components=2)
  x_train_mix_2d = x_train_mix.reshape(x_train_mix.shape[0], -1)
-
-
- # Fit two GMM models to the sample data
+ 
+  # Fit two GMM models to the sample data
 
  gmm_1 = GaussianMixture(n_components=2).fit(x_train_mix_2d)
  gmm_2 = GaussianMixture(n_components=2).fit(x_train_mix_2d)
 
  #gmm_1 = GaussianMixture(n_components=2).fit(x_train_mix)
  #gmm_2 = GaussianMixture(n_components=2).fit(x_train_mix)
+```
+
+
 
 # Approximate the KLD between the two GMM models
    kld = approximate_kld_between_gmm(gmm_1, gmm_2, x_train_mix_2d )
