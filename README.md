@@ -7,6 +7,15 @@ Deep learning techniques allow speech recognition and speaker identification fro
 This paper discusses the development of a backdoor attack in the audio domain to hijack DNN models (CNN large, VGG16, CNN Small, RNN with attention, CNN, etc.) so that they do things they should not, while keeping the clean signal and the backdoor signal unnoticed. The trick is to find ways to detect this imperceptible backdoor signal using GMM-PCA clustering techniques and analysis of the first layers of the DNN model through the subscanner using adversarial perturbations to detect any sudden, tiny changes in the signal. 
 
 
+## Documentation
+
+[Documentation](https://notes.quantecon.org/submission/5b3b1856b9eab00015b89f90)
+
+
+## Usage/Examples
+
+```python
+
 import tensorflow as tf
 import numpy as np
 
@@ -34,6 +43,11 @@ def approximate_kld_between_gmm(gmm_model_1, gmm_model_2, x):
                                                            np.linalg.inv(sigma_2[j]) @ (mu_1[i] - mu_2[j])) - n_features)
                                                            
     return kld
+
+```
+
+
+
 
    # Example usage:
     import matplotlib.pyplot as plt
