@@ -103,9 +103,12 @@ import os
 
 from art.attacks.poisoning.perturbations.audio_perturbations import insert_tone_trigger, insert_audio_trigger
 
+from tests.utils import ARTTestException
+
 logger = logging.getLogger(__name__)
 
 
+@pytest.mark.framework_agnostic
 def test_insert_tone_trigger(art_warning):
     try:
         # test single example
@@ -142,6 +145,9 @@ def test_insert_tone_trigger(art_warning):
         with pytest.raises(ValueError):
             _ = insert_tone_trigger(x=np.zeros(3200), sampling_rate=16000, duration=0.2, shift=5)
 
+    except ARTTestException as e:
+        art_warning(e)
+
 ```
 
 
@@ -150,7 +156,7 @@ def test_insert_tone_trigger(art_warning):
 ```python
 
 def test_insert_audio_trigger(art_warning):
-    file_path = os.path.join(os.getcwd(), "/data/orson_backdoor.wav")
+    file_path = os.path.join(os.getcwd(), "utils/data/backdoors/cough_trigger.wav")
     try:
         # test single example
         audio = insert_audio_trigger(x=np.zeros(32000), sampling_rate=16000, backdoor_path=file_path)
@@ -202,6 +208,9 @@ def test_insert_audio_trigger(art_warning):
                 duration=1,
                 shift=5,
             )
+
+    except ARTTestException as e:
+        art_warning(e)
 
 ```
 ## practical application 
