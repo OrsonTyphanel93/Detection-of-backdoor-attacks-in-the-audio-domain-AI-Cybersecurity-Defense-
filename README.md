@@ -204,8 +204,55 @@ def test_insert_audio_trigger(art_warning):
             )
 
 ```
+## practical application 
 
+```python
+import speech_recognition as sr
+import requests
+import json
+import time
 
+# Setup the Google Speech Recognition API
+r = sr.Recognizer()
+
+# Define the API endpoint for user verification
+api_endpoint = "https://example.com/api/user_verification"
+
+# Define the API endpoint for controlling the door lock
+door_lock_endpoint = "https://example.com/api/door_lock"
+
+# Define the command for unlocking the door
+unlock_command = {"command": "unlock"}
+
+while True:
+    # Listen for audio input from the user
+    with sr.Microphone() as source:
+        print("Please say your name...")
+        audio = r.listen(source)
+
+    # Convert the audio input to text using Google Speech Recognition
+    try:
+        user_name = r.recognize_google(audio)
+        print("User: " + user_name)
+        
+        # Send a request to the user verification API to check the user's identity
+        response = requests.post(api_endpoint, json={"user_name": user_name})
+        
+        # If the user is verified, unlock the door
+        if response.status_code == 200 and response.json()["verified"]:
+            response = requests.post(door_lock_endpoint, json=unlock_command)
+            print("Door unlocked!")
+        else:
+            print("Sorry, your identity could not be verified.")
+            
+    except sr.UnknownValueError:
+        print("Sorry, I could not understand what you said.")
+    except sr.RequestError as e:
+        print("Sorry, the Google Speech Recognition API is currently unavailable.")
+    
+    # Wait for 2 seconds before listening for the next command
+    time.sleep(2)
+```
 One way to protect against backdoors is to stay away from backdoor DNNs whose code, training data, and supply chain security flaws are left to others. Some people have a secret backdoor that allows them to control the actions of (some) deep neural networks (DNNs). To avoid being monitored, we use adversarial and clustering techniques to find any sudden, tiny changes in the DNN's own signal. If we detect such changes, we can know that the backdoor is present.
 
 With LLMs (large languages Models) and PPO (Dark knowledge , embodiment ; Proximal Policy Optimization, renforcement learning), attackers will further strengthen their cybersecurity attacks (such as backdoor, DDos, sphiging, trigger, spyware, etc.), will our standard detection methods be able to cope with even more polymorphic attacks? The aim of this article is to raise awareness and encourage research in this area and collaboration. 
