@@ -278,7 +278,15 @@ Poisoning-based backdoor attacks are a type of malicious cyberattack that uses m
 
 
 
-![fig_confusion_mtx-3](https://user-images.githubusercontent.com/64611605/221949038-0f836546-07c5-497f-86bf-3f10b7bc5116.png)
+![fig_plot_audio_comparison](https://user-images.githubusercontent.com/64611605/221949875-e00628ee-5d81-4d17-8576-7f4d239adb23.png)
+
+
+![adv_2](https://user-images.githubusercontent.com/64611605/221949703-0506b840-a62f-40d8-a5c4-e87dae4c4802.png)
+
+![adv_3](https://user-images.githubusercontent.com/64611605/221949741-eeeb2ecb-5c5a-43d4-ab00-e2812e2fe186.png)
+
+![adv_6](https://user-images.githubusercontent.com/64611605/221949778-5d899337-1fef-40fa-84df-05b43344acfd.png)
+
 
 
 
@@ -296,13 +304,8 @@ Poisoning-based backdoor attacks are a type of malicious cyberattack that uses m
 
 
 
-![CW_L2_Adversarial_detection_backdoor_attacks](https://user-images.githubusercontent.com/64611605/221946796-e6d386b3-b3ba-475d-a254-5e5108d751c2.png)
+![adv_1](https://user-images.githubusercontent.com/64611605/221949640-2102b825-9c25-413a-947b-6cf2c52e9cad.png)
 
-
-![DeepFool_Adversarial_detection_backdoor_attacks](https://user-images.githubusercontent.com/64611605/221946873-869f8cb9-b1ea-4997-882e-c19d788f1936.png)
-
-
-![NewtonFool_Adversarial_detection_backdoor_attacks](https://user-images.githubusercontent.com/64611605/221946905-f25968e8-bee2-45e3-ac7f-d4e3140bb0d4.png)
 
 
 
