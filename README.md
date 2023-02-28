@@ -278,7 +278,8 @@ Poisoning-based backdoor attacks are a type of malicious cyberattack that uses m
 
 
 
-![Unknown](https://user-images.githubusercontent.com/64611605/221948261-45e18cd2-82ea-4cff-9366-263b7a41e2ee.png)
+![fig_confusion_mtx-3](https://user-images.githubusercontent.com/64611605/221949038-0f836546-07c5-497f-86bf-3f10b7bc5116.png)
+
 
 
 
