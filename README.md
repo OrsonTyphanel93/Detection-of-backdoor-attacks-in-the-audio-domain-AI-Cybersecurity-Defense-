@@ -111,39 +111,41 @@ logger = logging.getLogger(__name__)
 @pytest.mark.framework_agnostic
 def test_insert_tone_trigger(art_warning):
     try:
-        # test single example
-        audio = insert_tone_trigger(x=np.zeros(3200), sampling_rate=16000)
-        assert audio.shape == (3200,)
-        assert np.max(audio) != 0
+        # Test single example
+        x = np.zeros(3200)
+        audio = insert_tone_trigger(x=x, sampling_rate=16000)
+        np.testing.assert_array_equal(audio.shape, (3200,))
+        np.testing.assert_almost_equal(np.max(audio), 0.5, decimal=5)
 
-        # test single example with differet duration, frequency, and scale
-        audio = insert_tone_trigger(x=np.zeros(3200), sampling_rate=16000, frequency=16000, duration=0.2, scale=0.5)
-        assert audio.shape == (3200,)
-        assert np.max(audio) != 0
+        # Test single example with different duration, frequency, and scale
+        audio = insert_tone_trigger(x=x, sampling_rate=16000, frequency=16000, duration=0.2, scale=0.5)
+        np.testing.assert_array_equal(audio.shape, (3200,))
+        np.testing.assert_almost_equal(np.max(audio), 0.5, decimal=5)
 
-        # test a batch of examples
-        audio = insert_tone_trigger(x=np.zeros((10, 3200)), sampling_rate=16000)
-        assert audio.shape == (10, 3200)
-        assert np.max(audio) != 0
+        # Test a batch of examples
+        x = np.zeros((10, 3200))
+        audio = insert_tone_trigger(x=x, sampling_rate=16000)
+        np.testing.assert_array_equal(audio.shape, (10, 3200))
+        np.testing.assert_almost_equal(np.max(audio), 0.5, decimal=5)
 
-        # test single example with shift
-        audio = insert_tone_trigger(x=np.zeros(3200), sampling_rate=16000, shift=10)
-        assert audio.shape == (3200,)
-        assert np.max(audio) != 0
-        assert np.sum(audio[:10]) == 0
+        # Test single example with shift
+        audio = insert_tone_trigger(x=x, sampling_rate=16000, shift=10)
+        np.testing.assert_array_equal(audio.shape, (3200,))
+        np.testing.assert_almost_equal(np.max(audio), 0.5, decimal=5)
+        np.testing.assert_almost_equal(np.sum(audio[:10]), 0, decimal=5)
 
-        # test a batch of examples with random shift
-        audio = insert_tone_trigger(x=np.zeros((10, 3200)), sampling_rate=16000, random=True)
-        assert audio.shape == (10, 3200)
-        assert np.max(audio) != 0
+        # Test a batch of examples with random shift
+        audio = insert_tone_trigger(x=x, sampling_rate=16000, random=True)
+        np.testing.assert_array_equal(audio.shape, (10, 3200))
+        np.testing.assert_almost_equal(np.max(audio), 0.5, decimal=5)
 
-        # test when length of backdoor is larger than that of audio signal
+        # Test when length of backdoor is larger than that of audio signal
         with pytest.raises(ValueError):
-            _ = insert_tone_trigger(x=np.zeros(3200), sampling_rate=16000, duration=0.3)
+            _ = insert_tone_trigger(x=x, sampling_rate=16000, duration=0.3)
 
-        # test when shift + backdoor is larger than that of audio signal
+        # Test when shift + backdoor is larger than that of audio signal
         with pytest.raises(ValueError):
-            _ = insert_tone_trigger(x=np.zeros(3200), sampling_rate=16000, duration=0.2, shift=5)
+            _ = insert_tone_trigger(x=x, sampling_rate=16000, duration=0.2, shift=5)
 
     except ARTTestException as e:
         art_warning(e)
@@ -155,62 +157,49 @@ def test_insert_tone_trigger(art_warning):
 
 ```python
 
-def test_insert_audio_trigger(art_warning):
-    file_path = os.path.join(os.getcwd(), "utils/data/backdoors/cough_trigger.wav")
-    try:
-        # test single example
-        audio = insert_audio_trigger(x=np.zeros(32000), sampling_rate=16000, backdoor_path=file_path)
-        assert audio.shape == (32000,)
-        assert np.max(audio) != 0
+@pytest.fixture(scope="module")
+def backdoor_file_path():
+    return os.path.join(os.getcwd(), "/content/orson_backdoor.wav")
 
-        # test single example with differet duration and scale
-        audio = insert_audio_trigger(
-            x=np.zeros(32000),
-            sampling_rate=16000,
-            backdoor_path=file_path,
-            duration=0.8,
-            scale=0.5,
-        )
-        assert audio.shape == (32000,)
-        assert np.max(audio) != 0
+@pytest.fixture(scope="module")
+def example_audio():
+    return np.zeros(32000)
 
-        # test a batch of examples
-        audio = insert_audio_trigger(x=np.zeros((10, 16000)), sampling_rate=16000, backdoor_path=file_path)
-        assert audio.shape == (10, 16000)
-        assert np.max(audio) != 0
+def test_insert_audio_trigger(backdoor_file_path, example_audio):
+    # Test single example
+    audio = insert_audio_trigger(x=example_audio, sampling_rate=16000, backdoor_path=backdoor_file_path)
+    assert audio.shape == (32000,)
+    assert np.max(audio) != 0
+    assert np.max(np.abs(audio)) <= 1.0
 
-        # test single example with shift
-        audio = insert_audio_trigger(x=np.zeros(32000), sampling_rate=16000, backdoor_path=file_path, shift=10)
-        assert audio.shape == (32000,)
-        assert np.max(audio) != 0
-        assert np.sum(audio[:10]) == 0
+    # Test single example with different duration and scale
+    audio = insert_audio_trigger(x=example_audio, sampling_rate=16000, backdoor_path=backdoor_file_path, duration=0.9, scale=0.5)
+    assert audio.shape == (32000,)
+    assert np.max(audio) != 0
 
-        # test a batch of examples with random shift
-        audio = insert_audio_trigger(
-            x=np.zeros((10, 32000)),
-            sampling_rate=16000,
-            backdoor_path=file_path,
-            random=True,
-        )
-        assert audio.shape == (10, 32000)
-        assert np.max(audio) != 0
+    # Test a batch of examples
+    audio = insert_audio_trigger(x=np.zeros((10, 16000)), sampling_rate=16000, backdoor_path=backdoor_file_path)
+    assert audio.shape == (10, 16000)
+    assert np.max(audio) != 0
 
-        # test when length of backdoor is larger than that of audio signal
-        with pytest.raises(ValueError):
-            _ = insert_audio_trigger(x=np.zeros(15000), sampling_rate=16000, backdoor_path=file_path)
+    # Test single example with shift
+    audio = insert_audio_trigger(x=example_audio, sampling_rate=16000, backdoor_path=backdoor_file_path, shift=10)
+    assert audio.shape == (32000,)
+    assert np.max(audio) != 0
+    assert np.sum(audio[:10]) == 0
 
-        # test when shift + backdoor is larger than that of audio signal
-        with pytest.raises(ValueError):
-            _ = insert_audio_trigger(
-                x=np.zeros(16000),
-                sampling_rate=16000,
-                backdoor_path=file_path,
-                duration=1,
-                shift=5,
-            )
+    # Test a batch of examples with random shift
+    audio = insert_audio_trigger(x=np.zeros((10, 32000)), sampling_rate=16000, backdoor_path=backdoor_file_path, random=True)
+    assert audio.shape == (10, 32000)
+    assert np.max(audio) != 0
 
-    except ARTTestException as e:
-        art_warning(e)
+    # Test when length of backdoor is larger than that of audio signal
+    with pytest.raises(ValueError):
+        _ = insert_audio_trigger(x=np.zeros(15000), sampling_rate=16000, backdoor_path=backdoor_file_path)
+
+    # Test when shift + backdoor is larger than that of audio signal
+    with pytest.raises(ValueError):
+        _ = insert_audio_trigger(x=np.zeros(16000), sampling_rate=16000, backdoor_path=backdoor_file_path, duration=1, shift=5)
 
 ```
 ## Backdoor attack practical application 
@@ -287,17 +276,35 @@ Poisoning-based backdoor attacks are a type of malicious cyberattack that uses m
 
 # Upcoming programme, implementation of audio @adversarial detection attacks. 
 
-![fig_plot_audio_comparison](https://user-images.githubusercontent.com/64611605/218340528-41955e0f-d73e-41fb-8585-ace1fe0fb203.png)
+
+
+
+![fig_plot_audio_comparison](https://user-images.githubusercontent.com/64611605/221947550-89191d5e-d042-4a5a-a3ff-2a046f952b4a.png)
+
+
+![fig_plot_audio_comparison_backdoor](https://user-images.githubusercontent.com/64611605/221947600-bd147397-b97b-4f7c-8669-dbf3f3174b59.png)
+
+
+
+
+
 ![fig_1](https://user-images.githubusercontent.com/64611605/218340613-c96324ca-45d4-43d6-b16e-45c1a9dc795a.png)
 
 ![fig_2](https://user-images.githubusercontent.com/64611605/218340618-05bccff7-b29d-4457-b59a-87c2e1d73749.png)
 
-![adv_6](https://user-images.githubusercontent.com/64611605/218340533-e86d5549-e986-45ec-900b-5fd7be41caab.png)
-![adv_3](https://user-images.githubusercontent.com/64611605/218340539-45d576bf-748f-4edf-9c6f-e4fcb0b86d83.png)
 
 
 
 
+
+
+![CW_L2_Adversarial_detection_backdoor_attacks](https://user-images.githubusercontent.com/64611605/221946796-e6d386b3-b3ba-475d-a254-5e5108d751c2.png)
+
+
+![DeepFool_Adversarial_detection_backdoor_attacks](https://user-images.githubusercontent.com/64611605/221946873-869f8cb9-b1ea-4997-882e-c19d788f1936.png)
+
+
+![NewtonFool_Adversarial_detection_backdoor_attacks](https://user-images.githubusercontent.com/64611605/221946905-f25968e8-bee2-45e3-ac7f-d4e3140bb0d4.png)
 
 
 
